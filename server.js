@@ -16,21 +16,21 @@ app.post(
     try {
       console.log("webhook triggered");
 
-      const rawBuffer = req.body; // Buffer
-      const raw = new Uint8Array(rawBuffer);
-      console.log("row:", raw);
-      const headers = {
-        "telnyx-signature-ed25519": req.header("telnyx-signature-ed25519"),
-        "telnyx-timestamp": req.header("telnyx-timestamp"),
-      };
+      const raw = req.body; // Buffer
+      // const raw = new Uint8Array(rawBuffer);
+      // console.log("row:", raw);
+      // const headers = {
+      //   "telnyx-signature-ed25519": req.header("telnyx-signature-ed25519"),
+      //   "telnyx-timestamp": req.header("telnyx-timestamp"),
+      // };
 
-      // Verify signature (API v2 webhooks use Ed25519)
-      // Throws if invalid
-      telnyxSdk.webhooks.signature.verifySignature(
-        raw,
-        headers,
-        process.env.TELNYX_PUBLIC_KEY
-      );
+      // // Verify signature (API v2 webhooks use Ed25519)
+      // // Throws if invalid
+      // telnyxSdk.webhooks.signature.verifySignature(
+      //   raw,
+      //   headers,
+      //   process.env.TELNYX_PUBLIC_KEY
+      // );
 
       const event = JSON.parse(raw.toString());
       console.log("Webhook:", event.data.event_type, event.data.payload);
