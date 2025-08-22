@@ -14,7 +14,10 @@ app.post(
   express.raw({ type: "application/json" }),
   (req, res) => {
     try {
+      console.log("webhook triggered");
+
       const raw = req.body; // Buffer
+      console.log("row:", raw);
       const headers = {
         "telnyx-signature-ed25519": req.header("telnyx-signature-ed25519"),
         "telnyx-timestamp": req.header("telnyx-timestamp"),
