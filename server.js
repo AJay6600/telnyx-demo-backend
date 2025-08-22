@@ -17,20 +17,6 @@ app.post(
       console.log("webhook triggered");
 
       const raw = req.body; // Buffer
-      // const raw = new Uint8Array(rawBuffer);
-      // console.log("row:", raw);
-      // const headers = {
-      //   "telnyx-signature-ed25519": req.header("telnyx-signature-ed25519"),
-      //   "telnyx-timestamp": req.header("telnyx-timestamp"),
-      // };
-
-      // // Verify signature (API v2 webhooks use Ed25519)
-      // // Throws if invalid
-      // telnyxSdk.webhooks.signature.verifySignature(
-      //   raw,
-      //   headers,
-      //   process.env.TELNYX_PUBLIC_KEY
-      // );
 
       const event = JSON.parse(raw.toString());
       console.log("Webhook:", event.data.event_type, event.data.payload);
@@ -41,13 +27,9 @@ app.post(
         // Speak then gather digits
         axios
           .post(
-            `https://api.telnyx.com/v2/calls/${call_control_id}/actions/gather_using_speak`,
+            `https://api.telnyx.com/v2/calls/${call_control_id}/actions/transfer`,
             {
-              payload: "Hello! Press 1 to confirm, or 2 to decline.",
-              voice: "female",
-              language: "en-US",
-              maximum_digits: 1,
-              inter_digit_timeout_ms: 5000,
+              to: "sip:usersiddharthmot80788.sip.telnyx.com",
             },
             {
               headers: {
